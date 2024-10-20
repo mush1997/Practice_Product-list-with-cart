@@ -1,0 +1,566 @@
+$Red: hsl(14, 86%, 42%);
+$Rose_50: hsl(20, 50%, 98%);
+$Rose_100: hsl(13, 31%, 94%);
+$Rose_300: hsl(14, 25%, 72%);
+$Rose_400: hsl(7, 20%, 60%);
+$Rose_500: hsl(12, 20%, 44%);
+$Rose_900: hsl(14, 65%, 9%);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Red Hat Text";
+    font-size: 16px;
+    font-weight: 400;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes shadow {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.4;
+    }
+}
+
+body::before {
+    content: "";
+    width: 100%;
+    background-color: black;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 5;
+    display: none;
+}
+
+body.shadow::before {
+    display: block;
+    animation: shadow 0.8s forwards;
+}
+
+body {
+    background-color: $Rose_100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+
+    main {
+        padding: 40px 60px;
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+
+        #desserts {
+            flex-basis: 70%;
+
+            h1 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+            }
+
+            .wrapper {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px 10px;
+
+                .dessert {
+                    width: 85%;
+
+                    div {
+                        margin-bottom: 24px;
+                        position: relative;
+
+                        .pic {
+                            width: 100%;
+                            border-radius: 10px;
+                            aspect-ratio: 1/1;
+                            object-position: center;
+                            object-fit: cover;
+                        }
+
+                        .pic.added {
+                            border: 2px solid $Red;
+                        }
+
+                        .add,
+                        .quantity {
+                            width: 60%;
+                            min-width: 120px;
+                            height: 36px;
+                            border-radius: 20px;
+                            line-height: 2;
+                            text-align: center;
+
+                            position: absolute;
+                            left: 50%;
+                            bottom: -11px;
+                            transform: translateX(-50%);
+
+                            span {
+                                font-size: 0.9rem;
+                                font-weight: 600;
+                                vertical-align: middle;
+                            }
+                        }
+
+                        .add {
+                            background-color: $Rose_50;
+                            border: 1px solid $Rose_400;
+                            z-index: 1;
+
+                            &:hover {
+                                cursor: pointer;
+                                border: 1px solid $Red;
+
+                                span {
+                                    color: $Red;
+                                }
+                            }
+
+                            span {
+                                color: $Rose_900;
+                            }
+
+                            img {
+                                width: 20px;
+                                vertical-align: middle;
+                                margin-right: 6px;
+                            }
+                        }
+
+                        .quantity {
+                            background-color: $Red;
+                            border: none;
+
+                            display: flex;
+                            justify-content: space-around;
+                            align-items: center;
+
+                            span {
+                                color: $Rose_50;
+                            }
+
+                            img {
+                                padding: 3px;
+                                width: 16px;
+                                height: 16px;
+                                border-radius: 50%;
+                                border: 1px solid $Rose_50;
+
+                                &:hover {
+                                    cursor: pointer;
+                                    filter: invert(100%);
+                                }
+                            }
+                        }
+                    }
+
+                    .category {
+                        font-size: 0.9rem;
+                        color: $Rose_400;
+                    }
+
+                    .name {
+                        font-weight: 700;
+                        color: $Rose_900;
+                        margin: 4px 0;
+                    }
+
+                    .price {
+                        font-weight: 600;
+                        color: $Red;
+                    }
+                }
+            }
+        }
+
+        #cart,
+        #list {
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+
+            .item {
+                border-bottom: 1px solid $Rose_100;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                h3 {
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    color: $Rose_900;
+                    margin-bottom: 6px;
+                }
+
+                span {
+                    font-size: 0.9rem;
+                }
+
+                .number {
+                    font-weight: 600;
+                    color: $Red;
+                    margin-right: 12px;
+                }
+
+                .unitPrice {
+                    font-weight: 400;
+                    color: $Rose_400;
+                    margin-right: 8px;
+                }
+
+                .subtotal {
+                    font-weight: 600;
+                    color: $Rose_500;
+                }
+            }
+
+            .total {
+                padding: 20px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                p {
+                    padding: 10px 0;
+                }
+
+                span {
+                    font-size: 1rem;
+                    font-weight: 400;
+                    color: $Rose_900;
+                }
+
+                .amount {
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                }
+            }
+
+            .btn {
+                width: 100%;
+                background-color: $Red;
+                border-radius: 24px;
+                border: none;
+                color: $Rose_100;
+
+                &:hover {
+                    cursor: pointer;
+                    filter: brightness(65%);
+                }
+            }
+        }
+
+        #cart {
+            flex-basis: 30%;
+            align-self: flex-start;
+
+            h2 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: $Red;
+                margin-bottom: 10px;
+            }
+
+            span {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: $Red;
+            }
+
+            .defaultCart {
+                text-align: center;
+
+                img {
+                    width: 50%;
+                }
+
+                p {
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    color: $Rose_500;
+                    margin: 10px 0;
+                }
+            }
+
+            .orderList {
+                .item {
+                    padding: 16px 0;
+
+                    img {
+                        padding: 2px;
+                        width: 18px;
+                        height: 18px;
+                        border-radius: 50%;
+                        border: 2px solid $Rose_300;
+                        margin-left: 10px;
+
+                        &:hover {
+                            cursor: pointer;
+                            filter: invert(100%);
+                        }
+                    }
+                }
+
+                .carbonNeutral {
+                    margin-bottom: 20px;
+                    padding: 14px 10px;
+                    background-color: $Rose_50;
+                    border-radius: 6px;
+                    text-align: center;
+
+                    img {
+                        vertical-align: middle;
+                        margin-right: 2px;
+                    }
+
+                    span {
+                        font-size: 1rem;
+                        font-weight: 600;
+                        color: $Rose_900;
+                        vertical-align: baseline;
+                    }
+                }
+            }
+
+            button {
+                padding: 12px 10px;
+            }
+
+            .hide {
+                display: none;
+            }
+        }
+
+        #list {
+            display: none;
+            width: 40%;
+            min-width: 400px;
+            max-width: 550px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+
+            img {
+                width: 30px;
+                margin-bottom: 10px;
+            }
+
+            hgroup {
+                margin-bottom: 24px;
+
+                h1 {
+                    font-size: 2rem;
+                    font-weight: 700;
+                }
+
+                p {
+                    font-size: 0.9rem;
+                    font-weight: 400;
+                    color: $Rose_400;
+                    margin-top: 4px;
+                }
+            }
+
+            .confirmedList {
+                margin-bottom: 20px;
+                padding: 0 10px;
+                background-color: $Rose_50;
+                border-radius: 10px;
+
+                .item {
+                    padding: 20px 10px;
+
+                    .single {
+                        display: flex;
+                        align-items: center;
+
+                        img {
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 6px;
+                            object-position: center;
+                            object-fit: cover;
+                            margin-bottom: 0;
+                            margin-right: 12px;
+                        }
+                    }
+
+                    .subtotal {
+                        color: $Rose_900;
+                    }
+                }
+            }
+
+            .total {
+                padding: 20px 10px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        #list.show {
+            display: block;
+            animation: appear 0.8s forwards;
+        }
+    }
+
+    footer {
+        padding: 10px;
+        font-size: 11px;
+        text-align: center;
+
+        a {
+            font-size: 11px;
+            color: hsl(228, 45%, 44%);
+        }
+    }
+}
+
+@media screen and (max-width:1100px) {
+    body {
+        main {
+            padding: 40px;
+            gap: 10px;
+
+            #desserts {
+                flex-basis: 65%;
+            }
+
+            #cart {
+                flex-basis: 35%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:930px) {
+    body {
+        main {
+            padding: 20px 30px;
+
+            #desserts {
+                .wrapper {
+                    .dessert {
+                        width: 90%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:800px) {
+    body {
+        main {
+            padding: 40px 60px;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 0;
+
+            #desserts {
+                flex-basis: auto;
+
+                .wrapper {
+                    display: block;
+
+                    .dessert {
+                        padding: 0 40px;
+                        width: 100%;
+                        max-width: 600px;
+                        margin-bottom: 50px;
+
+                        div {
+                            margin-bottom: 20px;
+
+                            .pic {
+                                aspect-ratio: auto;
+                            }
+
+                            .add,
+                            .quantity {
+                                width: 50%;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #cart {
+                flex-basis: auto;
+                align-self: auto;
+                width: calc(100% - 80px);
+                max-width: 520px;
+            }
+
+            #list {
+                width: 100%;
+                min-width: auto;
+                max-width: 520px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:550px) {
+    body {
+        main {
+            padding: 40px;
+
+            #desserts {
+                .wrapper {
+                    .dessert {
+                        padding: 0 20px;
+                    }
+                }
+            }
+
+            #cart {
+                width: calc(100% - 40px);
+            }
+        }
+    }
+}
+
+@media screen and (max-width:420px) {
+    body {
+        main {
+            padding: 30px;
+
+            #desserts {
+                .wrapper {
+                    .dessert {
+                        padding: 0;
+                    }
+                }
+            }
+
+            #cart {
+                width: 100%;
+            }
+        }
+    }
+}
